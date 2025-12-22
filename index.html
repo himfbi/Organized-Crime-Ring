@@ -260,6 +260,14 @@
                 <input type="text" id="activities" placeholder="e.g., Drug trafficking, Money laundering, Extortion">
             </div>
             <div class="form-group">
+                <label>Origin</label>
+                <input type="text" id="origin" placeholder="e.g., Liberty County, East Side, Downtown">
+            </div>
+            <div class="form-group">
+                <label>Investigated By</label>
+                <input type="text" id="investigatedBy" placeholder="e.g., Detective Smith, FBI, LCPD">
+            </div>
+            <div class="form-group">
                 <label>Details</label>
                 <textarea id="details" placeholder="Additional information about the crime ring..."></textarea>
             </div>
@@ -294,12 +302,12 @@
 
         // Firebase configuration - REPLACE THESE VALUES WITH YOUR OWN
         const firebaseConfig = {
-            apiKey: "AIzaSyAKx4Db6i0-mGFPBJIdsGhMfYlUJwmdVH8",
-            authDomain: "organised-crime-rings.firebaseapp.com",
-            projectId: "organised-crime-rings",
-            storageBucket: "organised-crime-rings.firebasestorage.app",
-            messagingSenderId: "619664770034",
-            appId: "1:619664770034:web:4a27cf7a56fecda0f0a16b"
+            apiKey: "YOUR_API_KEY_HERE",
+            authDomain: "YOUR_AUTH_DOMAIN_HERE",
+            projectId: "YOUR_PROJECT_ID_HERE",
+            storageBucket: "YOUR_STORAGE_BUCKET_HERE",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID_HERE",
+            appId: "YOUR_APP_ID_HERE"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -362,6 +370,8 @@
             const name = document.getElementById('name').value;
             const type = document.getElementById('type').value;
             const activities = document.getElementById('activities').value;
+            const origin = document.getElementById('origin').value;
+            const investigatedBy = document.getElementById('investigatedBy').value;
             const details = document.getElementById('details').value;
             const messageDiv = document.getElementById('formMessage');
 
@@ -377,6 +387,8 @@
                         name: name,
                         type: type,
                         activities: activities,
+                        origin: origin,
+                        investigatedBy: investigatedBy,
                         details: details,
                         lastModified: new Date().toISOString()
                     });
@@ -387,6 +399,8 @@
                         name: name,
                         type: type,
                         activities: activities,
+                        origin: origin,
+                        investigatedBy: investigatedBy,
                         details: details,
                         timestamp: new Date().toISOString()
                     });
@@ -406,6 +420,8 @@
             document.getElementById('name').value = '';
             document.getElementById('type').value = '';
             document.getElementById('activities').value = '';
+            document.getElementById('origin').value = '';
+            document.getElementById('investigatedBy').value = '';
             document.getElementById('details').value = '';
             document.getElementById('formTitle').textContent = 'Add New Crime Ring';
             document.getElementById('saveButton').textContent = 'Add Crime Ring';
@@ -420,6 +436,8 @@
             document.getElementById('name').value = profile.name;
             document.getElementById('type').value = profile.type;
             document.getElementById('activities').value = profile.activities || '';
+            document.getElementById('origin').value = profile.origin || '';
+            document.getElementById('investigatedBy').value = profile.investigatedBy || '';
             document.getElementById('details').value = profile.details || '';
             document.getElementById('formTitle').textContent = 'Edit Crime Ring';
             document.getElementById('saveButton').textContent = 'Update Crime Ring';
@@ -454,6 +472,8 @@
                     <div class="profile-info">
                         <p><strong>Type:</strong> ${profile.type}</p>
                         <p><strong>Activities:</strong> ${profile.activities || 'None listed'}</p>
+                        <p><strong>Origin:</strong> ${profile.origin || 'Unknown'}</p>
+                        <p><strong>Investigated By:</strong> ${profile.investigatedBy || 'N/A'}</p>
                         <p><strong>Added:</strong> ${new Date(profile.timestamp).toLocaleString()}</p>
                     </div>
                     <p><strong>Details:</strong> ${profile.details || 'No details provided'}</p>
@@ -493,6 +513,8 @@
                 profile.name.toLowerCase().includes(searchTerm) ||
                 profile.type.toLowerCase().includes(searchTerm) ||
                 (profile.activities && profile.activities.toLowerCase().includes(searchTerm)) ||
+                (profile.origin && profile.origin.toLowerCase().includes(searchTerm)) ||
+                (profile.investigatedBy && profile.investigatedBy.toLowerCase().includes(searchTerm)) ||
                 (profile.details && profile.details.toLowerCase().includes(searchTerm))
             );
 
